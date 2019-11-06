@@ -18,7 +18,7 @@ import resolve from "rollup-plugin-node-resolve";
 const cleanUp = (options = {}) => {
 	const {
 		hook = "buildStart",
-		targets = ["build/**"],
+		targets = ["./dist/**"],
 		verbose = false,
 		...rest
 	} = options;
@@ -28,60 +28,35 @@ const cleanUp = (options = {}) => {
 		[hook]: () =>
 			del(targets, rest).then(paths => {
 				if (verbose || rest.dryRun) {
-					// const message = rest.dryRun
-					// 	? `Expected files and folders to be deleted: ${paths.length}`
-					// 	: `Deleted files and folders: ${paths.length}`;
+					const message = rest.dryRun
+						? `Expected files and folders to be deleted: ${paths.length}`
+						: `Deleted files and folders: ${paths.length}`;
 
 					console.log("clearing the build folder");
 				}
 			})
 	};
 };
-
-const callSubModule = (options = {}) => {
-    return {
-        name: "generateBundle",
-        generateBundle: () => {
-            return new Promise((resolve, reject) => {
-				//
-			})
-        }
-    };
-};
-
 export default {
-	watch:
-		process.env.NODE_ENV !== "production"
-			? {
-					include: "src/**",
-					exclude: "node_modules/**"
-				}
-			: undefined,
-	input: "src/index.ts",
+	watch: {
+		include: ["/src/exmaple/**", "/src/build/**"],
+		exclude: "node_modules/**"
+	},
+	input: "src/example/index.ts",
 	output: [
 		{
 			file: pkg.main,
 			format: "umd",
-			sourcemap: process.env.NODE_ENV !== "production",
-			name: "demo",
-			globals: {
-				react: "React",
-				"react-dom": "ReactDOM"
-			}
+			sourcemap: true,
+			name: "demo"
 		}
 	],
-	external: [
-		...Object.keys(pkg.dependencies || {}),
-		...Object.keys(pkg.peerDependencies || {})
-	],
 	plugins: [
-		callSubModule(),
 		cleanUp({ verbose: true }),
 		json,
 		eslint({
-			include: ["src/**"],
-			exclude: ["src/**/*.css"],
-			throwOnError: process.env.NODE_ENV === "production"
+			include: ["src/example/**.{ts|tsx}"],
+			exclude: ["src/**/*.css"]
 		}),
 		resolve(),
 		commonjs(),
@@ -89,13 +64,12 @@ export default {
 			getJSON: (cssFileName, json, outputFileName) => {
 				var path = require("path");
 				var cssName = path.basename(cssFileName, ".css");
-				var jsonFileName = path.resolve("./build/" + cssName + ".json");
+				var jsonFileName = path.resolve("./dist/" + cssName + ".json");
 				fs.writeFileSync(jsonFileName, JSON.stringify(json));
 			},
 			extract: true,
 			plugins: [
-				autoprefixer(),
-				process.env.NODE_ENV === "production" ? cssnano() : () => {}
+				autoprefixer()
 			],
 			writeDefinitions: true,
 			modules: true
@@ -104,15 +78,28 @@ export default {
 			typescript,
 			clean: true,
 			verbosity: 0,
-			abortOnError: process.env.NODE_ENV === "production",
 			check: true
 		}),
 		babel({
 			exclude: "node_modules/**",
-			include: "src/**"
+			include: "/example/**"
 		}),
-		...(process.env.NODE_ENV === "production"
-			? [uglify()]
-			: [])
+		staticSite({
+			dir: "example",
+			moreStyles: ["/build/index.css"],
+			template: {
+				path: "static/index.html"
+			}
+		}),
+		serve({
+			open: true,
+			openPage: "/example/",
+			verbose: true,
+			// contentBase: ['build', 'example'],
+			contentBase: ["."],
+			host: "localhost",
+			port: 9000
+		}),
+		livereload()
 	]
 };

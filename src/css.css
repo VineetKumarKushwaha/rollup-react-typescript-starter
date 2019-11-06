@@ -2,5 +2,5 @@
     position: absolute;
 }
 body {
-    background: rebeccapurple;
+    border: 1px solid rebeccapurple;
 }

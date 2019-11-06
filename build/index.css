@@ -1,8 +1,15 @@
+.index_bold__30CiK {
+    font-weight: bold;
+}
+
+.index_italic__1MINR {
+    font-style: italic;
+}
 .css_someSelector__3u2nO {
     position: absolute;
 }
 body {
-    background: rebeccapurple;
+    border: 1px solid rebeccapurple;
 }
 .demo_prefix__CwzMi {
     -webkit-transform: translate(10);

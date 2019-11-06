@@ -1,24 +1,16 @@
 {
-	"name": "rollup-typescript-base-repo",
+	"name": "rollup-example",
 	"version": "1.0.0",
-	"description": "Base Repo for Library creation with Rollup, Typescript, babel, eslint and static server",
+	"description": "Example module where we test our library",
 	"main": "build/index.js",
 	"module": "build/component.esm.js",
 	"scripts": {
 		"lint": "eslint src/**/*.{ts,tsx}",
-		"build": "cross-env NODE_ENV=production rollup --c",
 		"start": "cross-env NODE_ENV=dev rollup --c --w",
-		"test": "echo \"Error: no test specified\" && exit 1",
-		"postinstall": "node scripts/install.js",
-		"clearDeps": "node scripts/cleanInstall.js"
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"author": "",
-	"types": "build/index.d.ts",
 	"license": "ISC",
-	"peerDependencies": {
-		"react": "^16.11.0",
-		"react-dom": "^16.11.0"
-	},
 	"devDependencies": {
 		"@babel/core": "^7.6.4",
 		"@babel/preset-env": "^7.6.3",
@@ -36,8 +28,6 @@
 		"eslint-config-airbnb-base": "^14.0.0",
 		"eslint-import-resolver-typescript": "^2.0.0",
 		"eslint-plugin-import": "^2.18.2",
-		"react": "^16.11.0",
-		"react-dom": "^16.11.0",
 		"rollup": "^1.26.0",
 		"rollup-plugin-babel": "^4.3.3",
 		"rollup-plugin-bundle-html": "^0.2.2",
@@ -61,6 +51,8 @@
 	],
 	"dependencies": {
 		"classnames": "^2.2.6",
-		"react-measure": "^2.3.0"
+		"react-measure": "^2.3.0",
+		"react": "^16.11.0",
+		"react-dom": "^16.11.0"
 	}
 }

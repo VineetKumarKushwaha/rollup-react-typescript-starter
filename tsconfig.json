@@ -6,7 +6,9 @@
     "target": "es5",
     "moduleResolution": "node",
     "sourceMap": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src/**/*", "./types/"],
   "exclude": ["node_modules"]
