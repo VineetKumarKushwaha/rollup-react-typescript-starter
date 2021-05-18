@@ -40,7 +40,7 @@
 		"rollup-plugin-postcss": "^2.0.3",
 		"rollup-plugin-postcss-modules": "^2.0.1",
 		"rollup-plugin-progress": "^1.1.1",
-		"rollup-plugin-serve": "^1.0.1",
+		"rollup-plugin-serve": "^1.0.2",
 		"rollup-plugin-static-site": "^0.1.0",
 		"rollup-plugin-typescript2": "^0.24.3",
 		"rollup-plugin-uglify": "^6.0.3",
